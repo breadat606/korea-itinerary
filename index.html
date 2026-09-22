@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>韩国山寺巡礼 + 城市漫步</title>
+</head>
+<body style="margin:0;padding:0;background:#F4F3EE;font-family:'PingFang SC','Roboto','Segoe UI',Arial,sans-serif;color:#1A1B1C;">
+
+<div id="app" style="max-width:520px;margin:0 auto;padding:16px;box-sizing:border-box;">
+
+  <div style="text-align:center;padding:8px 0 16px;">
+    <div style="font-size:22px;font-weight:600;color:#2d3b24;">韩国山寺巡礼 + 城市漫步</div>
+    <div style="font-size:13px;color:#6B7280;margin-top:4px;">9/26 – 10/5 · 共 10 天</div>
+    <div style="font-size:12px;color:#6DA34D;margin-top:2px;font-weight:500;">首尔 → 釜山 → 庆州 → 安东 → 首尔</div>
+  </div>
+
+  <div id="tabs" style="display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch;"></div>
+
+  <div style="padding:10px 12px;background:#fff;border:1px solid #E4E3DD;border-radius:10px;margin-bottom:14px;font-size:11.5px;line-height:2;">
+    <span style="display:inline-block;padding:1px 7px;background:rgba(143,188,148,0.3);color:#3d6b45;border-radius:8px;">蓝绿=游览用时</span>
+    <span style="display:inline-block;padding:1px 7px;background:#EDECE6;color:#4a4d52;border-radius:8px;">灰=市内短驳</span>
+    <span style="display:inline-block;padding:1px 7px;background:rgba(109,163,77,0.22);color:#3d6b2a;border-radius:8px;">绿=山有虎（点击跳单集）</span><br>
+    <span style="display:inline-block;padding:1px 7px;background:rgba(86,68,93,0.16);color:#3d2f42;border-radius:8px;">紫=✈ 飞机</span>
+    <span style="display:inline-block;padding:1px 7px;background:rgba(84,134,135,0.22);color:#2f5657;border-radius:8px;">青=🚄 KTX</span>
+    <span style="display:inline-block;padding:1px 7px;background:rgba(197,233,155,0.45);color:#4d6b1a;border-radius:8px;">茶=🚌 巴士</span>
+  </div>
+
+  <div id="content"></div>
+
+  <div style="text-align:center;font-size:11px;color:#9AA0A6;padding:20px 0;">
+    数据整理自行程表 · 播客集数对应山有虎 shanyouhu.xyz
+  </div>
+</div>
+
+<script>
+(function(){
+  var C = {
+    main: '#6DA34D', grape: '#56445D', cyan: '#548687', teal: '#8FBC94', tea: '#C5E99B',
+    spotTemple: '#6DA34D', spotAcad: '#548687', spotMuseum: '#56445D', spotLeisure: '#8FBC94', spotPalace: '#56445D'
+  };
+  var SHANYOUHU = 'https://shanyouhu.xyz/';
+
+  var data = [
+    {
+      day:1, date:'9/26 周六', city:'首尔中转 → 釜山',
+      nodes:[
+        {type:'transit', mode:'plane', time:'上午', label:'✈ 飞机', text:'深圳 → 首尔'},
+        {type:'transit', mode:'train', time:'10:18', label:'🚄 KTX143', text:'首尔站 → 釜山 12:57'},
+        {type:'meal', time:'13:00+', text:'到釜山，酒店 check-in'},
+        {type:'meal', time:'傍晚', text:'市区 city walk'}
+      ]
+    },
+    {
+      day:2, date:'9/27 周日', city:'釜山',
+      nodes:[
+        {type:'spot', time:'上午', name:'青沙浦', visit:'1.5–2h', next:'🚶 → 海云台', podcast:null, dot:C.spotLeisure},
+        {type:'spot', time:'下午', name:'海云台', visit:'2h+', next:'—', podcast:null, dot:C.spotLeisure}
+      ]
+    },
+    {
+      day:3, date:'9/28 周一', city:'釜山 → 通度寺（梁山）',
+      nodes:[
+        {type:'transit', mode:'local', time:'08:30', label:'🚇 地铁', text:'老圃站 3 号出口 → 釜山东部综合巴士客运站'},
+        {type:'transit', mode:'bus', time:'09:00', label:'🚌 市外巴士', text:'→ 通度寺新坪客运站'},
+        {type:'transit', mode:'local', time:'10:00', label:'🚶 步行', text:'沿参道步行 2km 到山门'},
+        {type:'spot', time:'10:30', name:'通度寺', visit:'2.5h', next:'🚌 巴士回釜山',
+          podcast:[{text:'🎧 Ep12–16 韩国山寺系列（总集）', url:SHANYOUHU+'16'}], dot:C.spotTemple},
+        {type:'meal', time:'15:30+', text:'返回釜山市区'}
+      ]
+    },
+    {
+      day:4, date:'9/29 周二', city:'釜山 ⇄ 庆州',
+      nodes:[
+        {type:'transit', mode:'bus', time:'08:00', label:'🚌 高速巴士', text:'老圃 → 庆州'},
+        {type:'spot', time:'09:30', name:'佛国寺', visit:'2h', next:'🚌 穿梭小巴 → 石窟庵',
+          podcast:[{text:'🎧 Ep14 造山：朴正熙重建佛国寺', url:SHANYOUHU+'14'}], dot:C.spotTemple},
+        {type:'spot', time:'11:45', name:'石窟庵', visit:'1h15m', next:'🚕 → 市区',
+          podcast:[{text:'🎧 Ep8 韩国古都庆州', url:SHANYOUHU+'8'}], dot:C.spotTemple},
+        {type:'meal', time:'13:00', text:'庆州市区午饭'},
+        {type:'spot', time:'14:30', name:'国立庆州博物馆', visit:'1.5h', next:'🚕 → 玉山书院', podcast:null, dot:C.spotMuseum},
+        {type:'spot', time:'16:30', name:'玉山书院', visit:'1.5h', next:'🚕 → 庆州巴士站',
+          podcast:[{text:'🎧 Ep10 朝鲜王朝的书院', url:SHANYOUHU+'10'}], dot:C.spotAcad},
+        {type:'transit', mode:'bus', time:'18:40', label:'🚌 高速巴士', text:'庆州 → 釜山'}
+      ]
+    },
+    {
+      day:5, date:'9/30 周三', city:'釜山 ⇄ 海印寺（伽倻山）',
+      nodes:[
+        {type:'transit', mode:'bus', time:'08:30', label:'🚌 市外巴士', text:'老圃 → 海印寺'},
+        {type:'transit', mode:'local', time:'10:10', label:'🚶 步行', text:'沿林间道 15min 到山门'},
+        {type:'spot', time:'10:30', name:'海印寺', visit:'2.5h', next:'🚶 → 巴士站',
+          podcast:[{text:'🎧 Ep12–16 韩国山寺系列（总集）', url:SHANYOUHU+'16'}],
+          dot:C.spotTemple, note:'八万大藏经板殿内部须官网预约'},
+        {type:'meal', time:'13:00', text:'午饭'},
+        {type:'spot', time:'13:30', name:'Sori-gil 林道', visit:'45min', next:'🚶 → 巴士站', podcast:null, dot:C.spotLeisure},
+        {type:'transit', mode:'bus', time:'15:00', label:'🚌 市外巴士', text:'海印寺 → 釜山老圃'}
+      ]
+    },
+    {
+      day:6, date:'10/1 周四', city:'釜山 → 安东',
+      nodes:[
+        {type:'meal', time:'上午', text:'釜山市内'},
+        {type:'transit', mode:'train', time:'12:07', label:'🚄 KTX-EUM 710', text:'釜田 → 安东 14:03'},
+        {type:'transit', mode:'local', time:'14:15', label:'🚕 打车', text:'安东站 → 凤停寺'},
+        {type:'spot', time:'14:45', name:'凤停寺', visit:'2h', next:'🚕 → 安东市区',
+          podcast:[{text:'🎧 Ep12–16 韩国山寺系列（总集）', url:SHANYOUHU+'16'}], dot:C.spotTemple},
+        {type:'meal', time:'18:00', text:'安东市区晚饭'}
+      ]
+    },
+    {
+      day:7, date:'10/2 周五', city:'安东 ⇄ 荣州',
+      nodes:[
+        {type:'transit', mode:'train', time:'10:02', label:'🚄 KTX-EUM 706', text:'安东 → 荣州 10:17'},
+        {type:'transit', mode:'local', time:'10:45', label:'🚕 打车', text:'荣州站 → 浮石寺'},
+        {type:'spot', time:'11:00', name:'浮石寺', visit:'3h', next:'🚕 → 荣州站',
+          podcast:[
+            {text:'🎧 Ep9 佛教东传', url:SHANYOUHU+'9'},
+            {text:'🎧 Ep12–16 山寺系列（总集）', url:SHANYOUHU+'16'}
+          ], dot:C.spotTemple},
+        {type:'transit', mode:'train', time:'14:57', label:'🚄 KTX-EUM 709', text:'荣州 → 安东 15:11'},
+        {type:'transit', mode:'local', time:'15:40', label:'🚕 打车', text:'安东站 → 屏山书院/河回村'},
+        {type:'spot', time:'16:00', name:'屏山书院 + 河回村', visit:'2.5h', next:'🚕 → 安东市区',
+          podcast:[{text:'🎧 Ep10 朝鲜王朝的书院', url:SHANYOUHU+'10'}], dot:C.spotAcad},
+        {type:'meal', time:'18:30', text:'安东市区晚饭'}
+      ]
+    },
+    {
+      day:8, date:'10/3 周六', city:'安东 → 首尔',
+      nodes:[
+        {type:'transit', mode:'train', time:'06:01', label:'🚄 KTX-EUM 702', text:'安东 → 首尔 08:31'},
+        {type:'meal', time:'09:00', text:'酒店放行李 + 早餐'},
+        {type:'spot', time:'10:00', name:'国立中央博物馆', visit:'2.5h', next:'—', podcast:null, dot:C.spotMuseum},
+        {type:'meal', time:'下午', text:'首尔自由活动'}
+      ]
+    },
+    {
+      day:9, date:'10/4 周日', city:'首尔',
+      nodes:[
+        {type:'spot', time:'09:30', name:'昌德宫（含秘苑）', visit:'2.5–3h', next:'—', podcast:null, dot:C.spotPalace, note:'秘苑需提前预约'},
+        {type:'meal', time:'下午', text:'首尔自由活动'}
+      ]
+    },
+    {
+      day:10, date:'10/5 周一', city:'首尔 → 深圳',
+      nodes:[
+        {type:'meal', time:'上午', text:'市区 city walk'},
+        {type:'transit', mode:'plane', time:'下午', label:'✈ 飞机', text:'首尔 → 深圳'}
+      ]
+    }
+  ];
+
+  var modeStyle = {
+    plane: {bg:'rgba(86,68,93,0.16)', fg:'#3d2f42', dot:C.grape},
+    train: {bg:'rgba(84,134,135,0.22)', fg:'#2f5657', dot:C.cyan},
+    bus:   {bg:'rgba(197,233,155,0.45)', fg:'#4d6b1a', dot:C.main},
+    local: {bg:'#EDECE6', fg:'#4a4d52', dot:'#9AA0A6'}
+  };
+
+  function podcastTags(podcast){
+    if(!podcast || podcast.length===0){
+      return '<span style="display:inline-block;padding:2px 8px;background:#F2F1EC;color:#6B7280;border-radius:8px;font-size:11.5px;">— 非山有虎路线</span>';
+    }
+    return podcast.map(function(p){
+      return '<a href="'+p.url+'" target="_blank" rel="noopener" style="display:inline-block;padding:2px 8px;background:rgba(109,163,77,0.22);color:#3d6b2a;border-radius:8px;font-size:11.5px;text-decoration:none;">'+p.text+' ↗</a>';
+    }).join(' ');
+  }
+
+  var tabsEl = document.getElementById('tabs');
+  var contentEl = document.getElementById('content');
+
+  data.forEach(function(d){
+    var btn = document.createElement('button');
+    btn.textContent = 'Day ' + d.day;
+    btn.setAttribute('data-day', d.day);
+    btn.style.cssText = 'flex:0 0 auto;padding:8px 14px;border:1px solid #E4E3DD;background:#fff;border-radius:20px;font-size:13px;cursor:pointer;font-family:inherit;color:#1A1B1C;';
+    btn.onclick = function(){ switchTab(d.day); };
+    tabsEl.appendChild(btn);
+  });
+
+  function switchTab(day){
+    var btns = tabsEl.children;
+    for(var i=0;i<btns.length;i++){
+      var b = btns[i];
+      if(parseInt(b.getAttribute('data-day'))===day){
+        b.style.background = C.main; b.style.borderColor = C.main; b.style.color = '#fff';
+      } else {
+        b.style.background = '#fff'; b.style.borderColor = '#E4E3DD'; b.style.color = '#1A1B1C';
+      }
+    }
+    renderDay(day);
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function renderDay(day){
+    var d = data.filter(function(x){return x.day===day;})[0];
+    var html = '';
+    html += '<div style="padding:12px 14px;background:rgba(109,163,77,0.14);border-left:3px solid '+C.main+';border-radius:8px;margin-bottom:14px;">';
+    html += '<div style="font-size:12px;color:#6B7280;">Day '+d.day+' · '+d.date+'</div>';
+    html += '<div style="font-size:15px;font-weight:600;color:#1A1B1C;margin-top:2px;">'+d.city+'</div>';
+    html += '</div>';
+
+    html += '<div style="position:relative;padding-left:22px;">';
+    html += '<div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,'+C.main+','+C.teal+');"></div>';
+
+    d.nodes.forEach(function(n){
+      if(n.type==='spot'){
+        html += '<div style="position:relative;margin-bottom:12px;">';
+        html += '<div style="position:absolute;left:-20px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2.5px solid '+n.dot+';box-sizing:border-box;"></div>';
+        html += '<div style="font-size:11.5px;color:#6B7280;">'+n.time+'</div>';
+        html += '<div style="font-size:15px;font-weight:600;color:#1A1B1C;margin:2px 0;">'+n.name+'</div>';
+        if(n.note){ html += '<div style="font-size:12px;color:#8a6a2a;margin-bottom:4px;">⚠ '+n.note+'</div>'; }
+        html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;align-items:center;">';
+        html += '<span style="display:inline-block;padding:2px 8px;background:rgba(143,188,148,0.32);color:#3d6b45;border-radius:8px;font-size:11.5px;">⏱ '+n.visit+'</span>';
+        html += '<span style="display:inline-block;padding:2px 8px;background:#EDECE6;color:#4a4d52;border-radius:8px;font-size:11.5px;">'+n.next+'</span>';
+        html += podcastTags(n.podcast);
+        html += '</div>';
+        html += '</div>';
+      } else if(n.type==='transit'){
+        var s = modeStyle[n.mode] || modeStyle.local;
+        html += '<div style="position:relative;margin-bottom:10px;">';
+        html += '<div style="position:absolute;left:-20px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2.5px solid '+s.dot+';box-sizing:border-box;"></div>';
+        html += '<div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">';
+        html += '<span style="font-size:11.5px;color:#6B7280;">'+n.time+'</span>';
+        html += '<span style="display:inline-block;padding:2px 9px;background:'+s.bg+';color:'+s.fg+';border-radius:8px;font-size:11.5px;font-weight:500;">'+n.label+'</span>';
+        html += '<span style="font-size:13px;color:#1A1B1C;">'+n.text+'</span>';
+        html += '</div>';
+        html += '</div>';
+      } else {
+        html += '<div style="position:relative;margin-bottom:10px;">';
+        html += '<div style="position:absolute;left:-20px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2.5px solid #9AA0A6;box-sizing:border-box;"></div>';
+        html += '<div style="font-size:13.5px;color:#1A1B1C;"><b style="font-size:12px;color:#6B7280;">'+n.time+'</b>  '+n.text+'</div>';
+        html += '</div>';
+      }
+    });
+    html += '</div>';
+    contentEl.innerHTML = html;
+  }
+
+  switchTab(1);
+})();
+</script>
+</body>
+</html>
