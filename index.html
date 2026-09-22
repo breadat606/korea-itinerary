@@ -43,10 +43,10 @@
 
   var data = [
     {
-      day:1, date:'9/26 周六', city:'首尔中转 → 釜山',
+      day:1, date:'9/26 周六', city:'深圳 → 首尔 → 釜山',
       nodes:[
-        {type:'transit', mode:'plane', time:'上午', label:'✈ 飞机', text:'深圳 → 首尔'},
-        {type:'transit', mode:'train', time:'10:18', label:'🚄 KTX143', text:'首尔站 → 釜山 12:57'},
+        {type:'transit', mode:'plane', time:'02:30', label:'✈ 飞机', from:'深圳', to:'首尔', arrive:'07:00'},
+        {type:'transit', mode:'train', time:'10:18', label:'🚄 KTX143', from:'首尔站', to:'釜山', arrive:'12:57'},
         {type:'meal', time:'13:00+', text:'到釜山，酒店 check-in'},
         {type:'meal', time:'傍晚', text:'市区 city walk'}
       ]
@@ -54,25 +54,26 @@
     {
       day:2, date:'9/27 周日', city:'釜山',
       nodes:[
-        {type:'spot', time:'上午', name:'青沙浦', visit:'1.5–2h', next:'🚶 → 海云台', podcast:null, dot:C.spotLeisure},
-        {type:'spot', time:'下午', name:'海云台', visit:'2h+', next:'—', podcast:null, dot:C.spotLeisure}
+        {type:'meal', time:'上午', text:'市区 city walk'},
+        {type:'spot', time:'14:00', name:'青沙浦', visit:'1.5–2h', next:'🚶 → 海云台', podcast:null, dot:C.spotLeisure},
+        {type:'spot', time:'16:00', name:'海云台', visit:'2h+', next:'—', podcast:null, dot:C.spotLeisure}
       ]
     },
     {
-      day:3, date:'9/28 周一', city:'釜山 → 通度寺（梁山）',
+      day:3, date:'9/28 周一', city:'釜山 ⇄ 通度寺（梁山）· 当日往返',
       nodes:[
-        {type:'transit', mode:'local', time:'08:30', label:'🚇 地铁', text:'老圃站 3 号出口 → 釜山东部综合巴士客运站'},
-        {type:'transit', mode:'bus', time:'09:00', label:'🚌 市外巴士', text:'→ 通度寺新坪客运站'},
-        {type:'transit', mode:'local', time:'10:00', label:'🚶 步行', text:'沿参道步行 2km 到山门'},
+        {type:'transit', mode:'local', time:'08:30', label:'🚇 地铁', from:'老圃站 3 号出口', to:'东部综合巴士客运站'},
+        {type:'transit', mode:'bus', time:'09:00', label:'🚌 市外巴士', from:'釜山东部巴士站', to:'通度寺新坪'},
+        {type:'transit', mode:'local', time:'10:00', label:'🚶 步行', from:'新坪客运站', to:'通度寺山门', note:'沿参道 2km'},
         {type:'spot', time:'10:30', name:'通度寺', visit:'2.5h', next:'🚌 巴士回釜山',
           podcast:[{text:'🎧 Ep12–16 韩国山寺系列（总集）', url:SHANYOUHU+'16'}], dot:C.spotTemple},
         {type:'meal', time:'15:30+', text:'返回釜山市区'}
       ]
     },
     {
-      day:4, date:'9/29 周二', city:'釜山 ⇄ 庆州',
+      day:4, date:'9/29 周二', city:'釜山 ⇄ 庆州 · 当日往返',
       nodes:[
-        {type:'transit', mode:'bus', time:'08:00', label:'🚌 高速巴士', text:'老圃 → 庆州'},
+        {type:'transit', mode:'bus', time:'08:00', label:'🚌 高速巴士', from:'老圃', to:'庆州'},
         {type:'spot', time:'09:30', name:'佛国寺', visit:'2h', next:'🚌 穿梭小巴 → 石窟庵',
           podcast:[{text:'🎧 Ep14 造山：朴正熙重建佛国寺', url:SHANYOUHU+'14'}], dot:C.spotTemple},
         {type:'spot', time:'11:45', name:'石窟庵', visit:'1h15m', next:'🚕 → 市区',
@@ -81,45 +82,45 @@
         {type:'spot', time:'14:30', name:'国立庆州博物馆', visit:'1.5h', next:'🚕 → 玉山书院', podcast:null, dot:C.spotMuseum},
         {type:'spot', time:'16:30', name:'玉山书院', visit:'1.5h', next:'🚕 → 庆州巴士站',
           podcast:[{text:'🎧 Ep10 朝鲜王朝的书院', url:SHANYOUHU+'10'}], dot:C.spotAcad},
-        {type:'transit', mode:'bus', time:'18:40', label:'🚌 高速巴士', text:'庆州 → 釜山'}
+        {type:'transit', mode:'bus', time:'18:40', label:'🚌 高速巴士', from:'庆州', to:'釜山'}
       ]
     },
     {
-      day:5, date:'9/30 周三', city:'釜山 ⇄ 海印寺（伽倻山）',
+      day:5, date:'9/30 周三', city:'釜山 ⇄ 海印寺（伽倻山）· 当日往返',
       nodes:[
-        {type:'transit', mode:'bus', time:'08:30', label:'🚌 市外巴士', text:'老圃 → 海印寺'},
-        {type:'transit', mode:'local', time:'10:10', label:'🚶 步行', text:'沿林间道 15min 到山门'},
+        {type:'transit', mode:'bus', time:'08:30', label:'🚌 市外巴士', from:'老圃', to:'海印寺'},
+        {type:'transit', mode:'local', time:'10:10', label:'🚶 步行', from:'海印寺巴士站', to:'山门', note:'沿林间道 15min'},
         {type:'spot', time:'10:30', name:'海印寺', visit:'2.5h', next:'🚶 → 巴士站',
           podcast:[{text:'🎧 Ep12–16 韩国山寺系列（总集）', url:SHANYOUHU+'16'}],
           dot:C.spotTemple, note:'八万大藏经板殿内部须官网预约'},
         {type:'meal', time:'13:00', text:'午饭'},
         {type:'spot', time:'13:30', name:'Sori-gil 林道', visit:'45min', next:'🚶 → 巴士站', podcast:null, dot:C.spotLeisure},
-        {type:'transit', mode:'bus', time:'15:00', label:'🚌 市外巴士', text:'海印寺 → 釜山老圃'}
+        {type:'transit', mode:'bus', time:'15:00', label:'🚌 市外巴士', from:'海印寺', to:'釜山老圃'}
       ]
     },
     {
       day:6, date:'10/1 周四', city:'釜山 → 安东',
       nodes:[
         {type:'meal', time:'上午', text:'釜山市内'},
-        {type:'transit', mode:'train', time:'12:07', label:'🚄 KTX-EUM 710', text:'釜田 → 安东 14:03'},
-        {type:'transit', mode:'local', time:'14:15', label:'🚕 打车', text:'安东站 → 凤停寺'},
+        {type:'transit', mode:'train', time:'12:07', label:'🚄 KTX-EUM 710', from:'釜田', to:'安东', arrive:'14:03'},
+        {type:'transit', mode:'local', time:'14:15', label:'🚕 打车', from:'安东站', to:'凤停寺'},
         {type:'spot', time:'14:45', name:'凤停寺', visit:'2h', next:'🚕 → 安东市区',
           podcast:[{text:'🎧 Ep12–16 韩国山寺系列（总集）', url:SHANYOUHU+'16'}], dot:C.spotTemple},
         {type:'meal', time:'18:00', text:'安东市区晚饭'}
       ]
     },
     {
-      day:7, date:'10/2 周五', city:'安东 ⇄ 荣州',
+      day:7, date:'10/2 周五', city:'安东 ⇄ 荣州 · 当日往返',
       nodes:[
-        {type:'transit', mode:'train', time:'10:02', label:'🚄 KTX-EUM 706', text:'安东 → 荣州 10:17'},
-        {type:'transit', mode:'local', time:'10:45', label:'🚕 打车', text:'荣州站 → 浮石寺'},
+        {type:'transit', mode:'train', time:'10:02', label:'🚄 KTX-EUM 706', from:'安东', to:'荣州', arrive:'10:17'},
+        {type:'transit', mode:'local', time:'10:45', label:'🚕 打车', from:'荣州站', to:'浮石寺'},
         {type:'spot', time:'11:00', name:'浮石寺', visit:'3h', next:'🚕 → 荣州站',
           podcast:[
             {text:'🎧 Ep9 佛教东传', url:SHANYOUHU+'9'},
             {text:'🎧 Ep12–16 山寺系列（总集）', url:SHANYOUHU+'16'}
           ], dot:C.spotTemple},
-        {type:'transit', mode:'train', time:'14:57', label:'🚄 KTX-EUM 709', text:'荣州 → 安东 15:11'},
-        {type:'transit', mode:'local', time:'15:40', label:'🚕 打车', text:'安东站 → 屏山书院/河回村'},
+        {type:'transit', mode:'train', time:'14:57', label:'🚄 KTX-EUM 709', from:'荣州', to:'安东', arrive:'15:11'},
+        {type:'transit', mode:'local', time:'15:40', label:'🚕 打车', from:'安东站', to:'屏山书院/河回村'},
         {type:'spot', time:'16:00', name:'屏山书院 + 河回村', visit:'2.5h', next:'🚕 → 安东市区',
           podcast:[{text:'🎧 Ep10 朝鲜王朝的书院', url:SHANYOUHU+'10'}], dot:C.spotAcad},
         {type:'meal', time:'18:30', text:'安东市区晚饭'}
@@ -128,7 +129,7 @@
     {
       day:8, date:'10/3 周六', city:'安东 → 首尔',
       nodes:[
-        {type:'transit', mode:'train', time:'06:01', label:'🚄 KTX-EUM 702', text:'安东 → 首尔 08:31'},
+        {type:'transit', mode:'train', time:'06:01', label:'🚄 KTX-EUM 702', from:'安东', to:'首尔', arrive:'08:31'},
         {type:'meal', time:'09:00', text:'酒店放行李 + 早餐'},
         {type:'spot', time:'10:00', name:'国立中央博物馆', visit:'2.5h', next:'—', podcast:null, dot:C.spotMuseum},
         {type:'meal', time:'下午', text:'首尔自由活动'}
@@ -145,7 +146,7 @@
       day:10, date:'10/5 周一', city:'首尔 → 深圳',
       nodes:[
         {type:'meal', time:'上午', text:'市区 city walk'},
-        {type:'transit', mode:'plane', time:'下午', label:'✈ 飞机', text:'首尔 → 深圳'}
+        {type:'transit', mode:'plane', time:'22:10', label:'✈ 飞机', from:'首尔', to:'深圳', arrive:'次日 01:15'}
       ]
     }
   ];
@@ -223,7 +224,11 @@
         html += '<div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">';
         html += '<span style="font-size:11.5px;color:#6B7280;">'+n.time+'</span>';
         html += '<span style="display:inline-block;padding:2px 9px;background:'+s.bg+';color:'+s.fg+';border-radius:8px;font-size:11.5px;font-weight:500;">'+n.label+'</span>';
-        html += '<span style="font-size:13px;color:#1A1B1C;">'+n.text+'</span>';
+        html += '<span style="font-size:13px;color:#1A1B1C;">'+n.from+' → '+n.to+'</span>';
+        if(n.note){ html += '<span style="font-size:11.5px;color:#6B7280;">('+n.note+')</span>'; }
+        if(n.arrive){
+          html += '<span style="display:inline-block;padding:2px 9px;background:'+C.main+';color:#fff;border-radius:8px;font-size:11.5px;font-weight:600;">🛬 '+n.arrive+'</span>';
+        }
         html += '</div>';
         html += '</div>';
       } else {
